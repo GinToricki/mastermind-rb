@@ -15,21 +15,21 @@ class Computer
     @computer_choice.each_with_index do |value, index|
       case value
       when 0
-        @computer_choice[index] = 'red'
+        @computer_choice[index] = 'R'
       when 1
-        @computer_choice[index] = 'blue'
+        @computer_choice[index] = 'B'
       when 2
-        @computer_choice[index] = 'green'
+        @computer_choice[index] = 'G'
       when 3
-        @computer_choice[index] = 'orange'
+        @computer_choice[index] = 'O'
       when 4
-        @computer_choice[index] = 'yellow'
+        @computer_choice[index] = 'Y'
       when 5
-        @computer_choice[index] = 'brown'
+        @computer_choice[index] = 'P'
       when 6
-        @computer_choice[index] = 'black'
+        @computer_choice[index] = 'T'
       when 7
-        @computer_choice[index] = 'white'
+        @computer_choice[index] = 'W'
       else
         'Error'
       end
@@ -37,6 +37,4 @@ class Computer
   end
 end
 
-pc = Computer.new
-pc.get_computerchoice
-puts pc.computer_choice
+
