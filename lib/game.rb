@@ -6,6 +6,8 @@ class Game
     @player = Player.new('')
     @computer = Computer.new
     @guesses = []
+    @correct_choices = []
+    @guessed_colors = {}
   end
 
   def enter_player_name
@@ -25,16 +27,53 @@ class Game
     p @computer.computer_choice
   end
 
+  def set_hashes
+    @computer.computer_choice.each do |value|
+      @guessed_colors[value] = if @guessed_colors.has_key?(value)
+                                 @guessed_colors[value] + 1
+                               else
+                                 1
+                               end
+    end
+    puts @guessed_colors
+  end
+
   def play_round
     enter_guess
     @guesses.each_with_index do |value, index|
-      if @guesses[index] == @computer.computer_choice[index] 
-        puts "Correct choice for #{value} at index #{index}"
+      if @guesses[index] == @computer.computer_choice[index]
+        @correct_choices.unshift('R')
+      elsif @computer.computer_choice.include?(@guesses[index]) && @guessed_colors[:value] > 0
+        @correct_choices << 'W'
+        @guessed_colors[:value] = @guessed_colors[value] - 1
       end
+    end
+    puts @correct_choices
+    set_hashes
+  end
+
+  def check_win
+    if @correct_choices.count('R') == 4
+      puts "You win"
+      return false
+    end
+
+    true
+  end
+
+  def play_game
+    count = 0
+    while check_win
+      @correct_choices = []
+      @guessed_colors = {}
+      play_round
+      count += 1
+      break if count == 5
     end
   end
 end
 
 g = Game.new
 g.generate_computer_choice
-g.play_round
+g.set_hashes
+g.play_game
