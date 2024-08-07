@@ -40,16 +40,17 @@ class Game
 
   def play_round
     enter_guess
+    set_hashes
     @guesses.each_with_index do |value, index|
       if @guesses[index] == @computer.computer_choice[index]
         @correct_choices.unshift('R')
-      elsif @computer.computer_choice.include?(@guesses[index]) && @guessed_colors[:value] > 0
+        @guessed_colors[value] = @guessed_colors[value] - 1
+      elsif @computer.computer_choice.include?(@guesses[index]) && @guessed_colors[value] > 0
         @correct_choices << 'W'
-        @guessed_colors[:value] = @guessed_colors[value] - 1
+        @guessed_colors[value] = @guessed_colors[value] - 1
       end
     end
     puts @correct_choices
-    set_hashes
   end
 
   def check_win
